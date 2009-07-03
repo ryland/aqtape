@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>AQ Tape</title>
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/soundmanager2.js"></script>
+<link rel="stylesheet" type="text/css" href="css/page-player.css" />
+<style>
+  body { font:75% 'Helvetica Neue', Helvetica, Arial, sans-serif; margin:0; text-shadow: 0px -1px 1px #aaa;}
+  h2 { background-color:#fcffd1; color:#222; font-size:16px; margin:0; padding:1em; } 
+  .playlist .sm2_link { letter-spacing:-1px; }
+  .playlist .sm2_link .artist { font-weight:bold; }
+  .description { font-size:14px; color:#fff; letter-spacing:0; display:none; position:relative; line-height:1.25; padding-top: .5em; text-shadow: 0px -1px 1px #303030; }
+  .playlist a.order { background-color:#2ba8c5; text-shadow:none; padding:.25em; position: absolute; right:0; top:0; margin:0; }
+  .playlist .description a:hover.order { background-color: #0986a3; }
+  .playlist .sm2_playing .description a.order { color: #fff; }
+  .playlist .sm2_playing .description { display:block; }
+  .playlist .sm2_paused .description { display:block; }
+
+ul.playlist li.sm2_playing a {
+ color:#fff;
+}
+
+ul.playlist li.sm2_playing .timing,
+ul.playlist.use-peak li.sm2_playing .peak {
+ color:#999;
+}
+
+ul.playlist.use-spectrum li.sm2_playing .spectrum-container {
+ background-color:#222;
+ border-color:#444;
+}
+
+ul.playlist.use-spectrum li.sm2_playing .spectrum-container .spectrum {
+ background-color:#999;
+}
+
+ul.playlist li.sm2_paused {
+ background-color:#333;
+}
+
+ul.playlist li.sm2_paused a {
+ color:#999;
+}
+
+ul.playlist li.sm2_playing,
+ul.playlist li.sm2_playing:hover {
+ background-color:#333;
+}
+
+ul.playlist li:hover .controls .statusbar {
+ background-color:#666;
+}
+
+ul.playlist li .controls {
+ background-color:#333;
+}
+
+ul.playlist li .controls .statusbar {
+ background-color:#666;
+ border-color:#444;
+}
+ul.playlist li .controls .statusbar .position {
+ background-color:#2ba8c5;
+ border-right:3px solid #fff;
+ border-radius:3px;
+ -moz-border-radius:3px;
+ -webkit-border-radius:3px;
+}
+
+ul.playlist li .controls .statusbar .loading {
+ background-color:#444;
+}
+
+ul.playlist li .timing,
+ul.playlist.use-peak li .peak {
+ background-color:#222;
+ border-color:#444;
+}
+
+ul.playlist.use-peak li .peak .l,
+ul.playlist.use-peak li .peak .r {
+ border-color:#444;
+ background-color:#999;
+}
+  
+</style>
+</head>
+
+<body>
+  <div id="content">
+    <h2>AQ Tape</h2>
+    <ul class="playlist">
+    <% @albums.each_with_index do |a,i| %>
+      <% a[:mp3s].each do |m| %>
+        <li id="release_<%= i %>" class="<%= a[:class] %>">
+          <a href="<%= m[:url] %>" class="mp3"><%= a[:artist] %>&mdash; <%= m[:name] %></a>
+          <div class="description">
+            <p class="album">from <i><%= a[:album] %></i> <a href="http://aquariusrecords.org/bin/search.cgi?searchfield=keyword&search_string=<%= "#{a[:artist]} #{a[:album]}" %>" class="order">Order from Aquarius</a></p>
+            <%= a[:description] %>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+    </ul>
+  </div>
+
+ <div id="control-template">
+  <!-- control markup inserted dynamically after each link -->
+  <div class="controls">
+   <div class="statusbar">
+    <div class="loading"></div>
+     <div class="position"></div>
+   </div>
+  </div>
+  <div class="timing">
+   <div id="sm2_timing" class="timing-data">
+    <span class="sm2_position">%s1</span> / <span class="sm2_total">%s2</span></div>
+  </div>
+  <div class="peak">
+   <div class="peak-box"><span class="l"></span><span class="r"></span>
+   </div>
+  </div>
+ </div>
+
+ <div class="info">
+ </div>
+
+ <div id="spectrum-container" class="spectrum-container">
+  <div class="spectrum-box">
+   <div class="spectrum"></div>
+  </div>
+ </div> 
+
+        
+<script type="text/javascript" src="js/page-player.js"></script>
+<script type="text/javascript">
+  $(function() { 
+      $('.playlist li').each {
+      $('a.info').click(function() {
+          $(this).next('.description').toggle();
+        });
+  });
+</script>
+</body>
+</html>
