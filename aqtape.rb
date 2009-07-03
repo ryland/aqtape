@@ -25,6 +25,7 @@ get '/' do
       #current_class = a[:class] = (current_class == 'new') ? 'new' : class_for(item)
       a[:mp3s] = []
       item.parent.search("b[text()*='MPEG Stream']").each do |m|
+        # don't need to proxy w/ firefox
         if request.user_agent =~ /.*Firefox.*/
           a[:mp3s]<< { :url => "http://aquariusrecords.org#{((m/('a')).first[:href].gsub(/m3u/, 'mp3'))}", :name => (m/('a')).first.inner_text }
         else
@@ -38,7 +39,7 @@ get '/' do
   erb :index
 end
 
-# TODO stream
+# play the tunes
 get '/tunes/*' do 
   m = open("http://aquariusrecords.org/#{params[:splat]}", :progress_proc => lambda{|l| headers('Content-Length' => l.to_s) })
   content_type 'audio/mpeg'
