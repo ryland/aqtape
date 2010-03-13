@@ -8,7 +8,7 @@
 <script type="text/javascript" src="js/soundmanager2.js"></script>
 <link rel="stylesheet" type="text/css" href="css/page-player.css" />
 <style>
-  body { font:75% 'Helvetica Neue', Helvetica, Arial, sans-serif; margin:0; text-shadow: 0px -1px 1px #aaa;}
+  body { font:75% 'Helvetica Neue', Helvetica, Arial, sans-serif; margin:0; }
   h2 { background-color:#fcffd1; color:#222; font-size:16px; margin:0; padding:1em; } 
   .playlist .sm2_link .artist { font-weight:bold; }
   .description { font-size:14px; color:#fff; letter-spacing:0; display:none; position:relative; line-height:1.25; padding-top: .5em; text-shadow: 0px -1px 1px #303030; }
@@ -17,7 +17,8 @@
   .playlist .sm2_playing .description { display:block; }
   .playlist .sm2_paused .description { display:block; }
   .playlist .sm2_paused .description a.order { color: #fff; }
-
+  #footer { background-color: #ccc; padding: .5em 1em; color: #999; }
+  #footer a { color: #333; }
 
 </style>
 </head>
@@ -67,14 +68,19 @@
   </div>
  </div> 
 
+ <div id="footer">
+   This is provided as a helpful service for browsing the AQ <a href="http://aquariusrecords.org/cat/newest.html">update</a>. All content belongs to <a href="http://aquariusrecords.org">Aquarius Records</a>. If you find this useful, please consider purchasing records from them.
+ </div>
+
         
 <script type="text/javascript" src="js/page-player.js"></script>
 <script type="text/javascript">
   $(function() { 
-      $('.playlist li').each {
+      $('.playlist li').each(function() {
       $('a.info').click(function() {
           $(this).next('.description').toggle();
         });
+      });
   });
 </script>
 </body>
