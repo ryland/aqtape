@@ -1,6 +1,6 @@
 require 'rubygems'
-require 'sinatra'
 require 'open-uri'
+require 'sinatra'
 require 'hpricot'
 
 HIGHLIGHTS = "Highlights :"
@@ -14,6 +14,7 @@ get '/' do
   ids = []
 
   current_class = 'rotw'
+  # hrpicot magic to parse the unbelievably rough html
   doc.search("b[text()*='MPEG Stream']:nth-of-type(3)").each do |item|
     a = {}
     a[:artist] = item.parent.search('b:first').text
@@ -21,7 +22,13 @@ get '/' do
     id = a[:artist] + '_' + a[:album]
     unless ids.include?(id)
       ids<<id 
-      a[:description] = item.parent.children.select{|e| e.text? && e.inner_text =~ /\w+/ }.join
+      a[:description] = ""
+      item.parent.children.each do |e| 
+        # keep from grabbing the end of the update after the last release
+        break if e.inner_text =~ /---/
+        # we only want text
+        a[:description] += e.to_s if e.text? && e.inner_text =~ /\w+/
+      end
       #current_class = a[:class] = (current_class == 'new') ? 'new' : class_for(item)
       a[:mp3s] = []
       item.parent.search("b[text()*='MPEG Stream']").each do |m|
@@ -41,7 +48,8 @@ end
 
 # play the tunes
 get '/tunes/*' do 
-  m = open("http://aquariusrecords.org/#{params[:splat]}", :progress_proc => lambda{|l| headers('Content-Length' => l.to_s) })
+  m = open("http://aquariusrecords.org/#{params[:splat]}", :content_length_proc => lambda{|l| headers('Content-Length' => l.to_s) })
+  headers['Cache-Control'] = 'public; max-age=2592000'
   content_type 'audio/mpeg'
   m
 end
