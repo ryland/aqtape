@@ -45,10 +45,6 @@ ul.playlist li a {
  z-index:2;
 }
 
-ul.playlist .sm2_link {
-  padding: .25em 0;
-}
-
 ul.playlist li.sm2_playing,
 ul.playlist li.sm2_paused,
 ul.playlist li.sm2_playing a {
