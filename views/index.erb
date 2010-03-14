@@ -26,7 +26,7 @@
     <ul class="playlist">
     <% @albums.each_with_index do |a,i| %>
       <% a[:mp3s].each do |m| %>
-        <li id="release_<%= i %>" class="<%= a[:class] %>">
+        <li id="release_<%= i %>">
         <a href="<%= m[:url] %>" class="mp3"><b><%= a[:artist] %></b>&mdash; <%= m[:name] %></a>
           <div class="description">
             <p class="album">from <i><%= a[:album] %></i> <a href="http://aquariusrecords.org/bin/search.cgi?searchfield=keyword&search_string=<%= "#{a[:artist]} #{a[:album]}" %>" target="_blank" class="order">Order from Aquarius</a></p>

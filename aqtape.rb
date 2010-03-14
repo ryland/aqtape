@@ -13,7 +13,6 @@ get '/' do
   @albums = []
   ids = []
 
-  current_class = 'rotw'
   # hrpicot magic to parse the unbelievably rough html
   doc.search("b[text()*='MPEG Stream']:nth-of-type(3)").each do |item|
     a = {}
@@ -29,7 +28,6 @@ get '/' do
         a[:description].push(e.to_s) if e.text? && e.inner_text =~ /\w+/
       end
       a[:description] = a[:description].join("<br />")
-      #current_class = a[:class] = (current_class == 'new') ? 'new' : class_for(item)
       a[:mp3s] = []
       item.parent.search("b[text()*='MPEG Stream']").each do |m|
         # don't need to proxy w/ firefox
@@ -52,16 +50,4 @@ get '/tunes/*' do
   headers['Cache-Control'] = 'public; max-age=2592000'
   content_type 'audio/mpeg'
   m
-end
-
-helpers do
-  def class_for(element)
-    if element.parent.preceding.at("[text()*='#{NEW_ARRIVALS}']")
-      'new'
-    elsif element.parent.preceding.at("[text()*='#{HIGHLIGHTS}']")
-      'highlights'
-    else
-      'rotw'
-    end
-  end
 end
