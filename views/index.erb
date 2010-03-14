@@ -8,18 +8,15 @@
 <script type="text/javascript" src="js/soundmanager2.js"></script>
 <link rel="stylesheet" type="text/css" href="css/page-player.css" />
 <style>
-  body { font:75% 'Helvetica Neue', Helvetica, Arial, sans-serif; margin:0; }
-  h2 { background-color:#fcffd1; color:#222; font-size:16px; margin:0; padding:1em; } 
-  .playlist .sm2_link .artist { font-weight:bold; }
-  .description { font-size:14px; color:#fff; letter-spacing:0; display:none; position:relative; line-height:1.25; padding-top: .5em; text-shadow: 0px -1px 1px #303030; }
-  .playlist a.order { background-color:#2ba8c5; text-shadow:none; padding:.25em; position: absolute; right:0; top:0; margin:0; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; }
-  .playlist .description a:hover.order { background-color: #0986a3; }
+  body { font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif; margin: 0; font-size: 75%; }
+  h2 { background-color:#fcffd1; color:#222; font-size:16px; margin:0; padding:1em; border-bottom: 1px solid #fff; } 
+  .description { font-size:14px; color:#222; letter-spacing:0; display:none; position:relative; line-height:1.25; padding: .5em 0 1em 0; }
+  #content a.order { background-color:#cc9966; text-shadow:none; padding:.5em; position: absolute; right:0; top:0; margin:0; border-radius:5px; -webkit-border-radius:5px; -moz-border-radius:5px; color: #fff; }
+  #content a:hover.order { background-color: #bb8855; }
   .playlist .sm2_playing .description { display:block; }
   .playlist .sm2_paused .description { display:block; }
-  .playlist .sm2_paused .description a.order { color: #fff; }
-  #footer { background-color: #ccc; padding: .5em 1em; color: #999; }
+  #footer { background-color: #ccc; padding: 1em 1em; color: #666; border-top: 1px solid #fff; }
   #footer a { color: #333; }
-
 </style>
 </head>
 
@@ -30,9 +27,9 @@
     <% @albums.each_with_index do |a,i| %>
       <% a[:mp3s].each do |m| %>
         <li id="release_<%= i %>" class="<%= a[:class] %>">
-          <a href="<%= m[:url] %>" class="mp3"><%= a[:artist] %>&mdash; <%= m[:name] %></a>
+        <a href="<%= m[:url] %>" class="mp3"><b><%= a[:artist] %></b>&mdash; <%= m[:name] %></a>
           <div class="description">
-            <p class="album">from <i><%= a[:album] %></i> <a href="http://aquariusrecords.org/bin/search.cgi?searchfield=keyword&search_string=<%= "#{a[:artist]} #{a[:album]}" %>" class="order">Order from Aquarius</a></p>
+            <p class="album">from <i><%= a[:album] %></i> <a href="http://aquariusrecords.org/bin/search.cgi?searchfield=keyword&search_string=<%= "#{a[:artist]} #{a[:album]}" %>" target="_blank" class="order">Order from Aquarius</a></p>
             <%= a[:description] %>
           </div>
         </li>
@@ -69,8 +66,7 @@
  </div> 
 
  <div id="footer">
-   This is provided as a helpful service for browsing the AQ <a href="http://aquariusrecords.org/cat/newest.html">update</a>. All content belongs to <a href="http://aquariusrecords.org">Aquarius Records</a>. If you find this useful, please consider purchasing records from them.
- </div>
+   This is provided as a helpful service for browsing the AQ <a href="http://aquariusrecords.org/cat/newest.html">update</a>. All content belongs to <a href="http://aquariusrecords.org">Aquarius Records</a>. If you find this useful, please purchase records from them.</div>
 
         
 <script type="text/javascript" src="js/page-player.js"></script>

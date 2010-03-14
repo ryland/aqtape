@@ -520,7 +520,7 @@ function PagePlayer(oConfigOverride) {
         oGraph: self.getElementsByClassName('spectrum-box','div',o.parentNode)[0],
         nIndex: self.getSoundIndex(o),
         className: self.css.sPlaying,
-        originalTitle: o.innerHTML,
+        originalTitle: o.innerText,
         metadata: null
       };
       thisSound._data.oTimingBox.appendChild(document.getElementById('spectrum-container'));
