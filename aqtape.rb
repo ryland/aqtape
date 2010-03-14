@@ -41,13 +41,14 @@ get '/' do
     end
   end
 
+  headers['Cache-Control'] = 'public, max-age=18000'
   erb :index
 end
 
 # play the tunes
 get '/tunes/*' do 
   m = open("http://aquariusrecords.org/#{params[:splat]}", :content_length_proc => lambda{|l| headers('Content-Length' => l.to_s) })
-  headers['Cache-Control'] = 'public; max-age=2592000'
+  headers['Cache-Control'] = 'public, max-age=2592000'
   content_type 'audio/mpeg'
   m
 end
