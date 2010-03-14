@@ -19,16 +19,16 @@ get '/' do
     a = {}
     a[:artist] = item.parent.search('b:first').text
     a[:album] = item.parent.search('em:first').text
-    id = a[:artist] + '_' + a[:album]
-    unless ids.include?(id)
+    unless ids.include?(id = a[:artist] + '_' + a[:album])
       ids<<id 
-      a[:description] = ""
+      a[:description] = []
       item.parent.children.each do |e| 
         # keep from grabbing the end of the update after the last release
         break if e.inner_text =~ /---/
         # we only want text
-        a[:description] += e.to_s if e.text? && e.inner_text =~ /\w+/
+        a[:description].push(e.to_s) if e.text? && e.inner_text =~ /\w+/
       end
+      a[:description] = a[:description].join("<br />")
       #current_class = a[:class] = (current_class == 'new') ? 'new' : class_for(item)
       a[:mp3s] = []
       item.parent.search("b[text()*='MPEG Stream']").each do |m|
