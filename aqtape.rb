@@ -32,12 +32,7 @@ get '/' do
       item.parent.search("b[text()*='MPEG Stream']").each do |m|
         # typos in the list html can really cause problems
         next unless (m/('a')).first[:href] =~ /m3u/
-        # don't need to proxy w/ firefox
-        if request.user_agent =~ /.*Firefox.*/
-          a[:mp3s]<< { :url => "http://aquariusrecords.org#{((m/('a')).first[:href].gsub(/m3u/, 'mp3'))}", :name => (m/('a')).first.inner_text }
-        else
-          a[:mp3s]<< { :url => "/tunes#{((m/('a')).first[:href].gsub(/m3u/, 'mp3'))}", :name => (m/('a')).first.inner_text }
-        end
+        a[:mp3s]<< { :url => "/tunes#{((m/('a')).first[:href].gsub(/m3u/, 'mp3'))}", :name => (m/('a')).first.inner_text }
       end
       @albums<<a
     end
