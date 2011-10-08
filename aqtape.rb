@@ -31,7 +31,7 @@ get '/' do
       a[:mp3s] = []
       item.parent.search("b[text()*='MPEG Stream']").each do |m|
         # typos in the list html can really cause problems
-        next unless (m/('a')).first[:href] =~ /m3u/
+        next unless !(m/('a')).empty? && (m/('a')).first[:href] =~ /m3u/
         a[:mp3s]<< { :url => "/tunes#{((m/('a')).first[:href].gsub(/m3u/, 'mp3'))}", :name => (m/('a')).first.inner_text }
       end
       @albums<<a
